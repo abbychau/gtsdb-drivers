@@ -113,6 +113,38 @@ class TSDBClient {
       };
     });
   }
+
+  subscribe(key) {
+    return new Promise((resolve, reject) => {
+      this.socket.write(`subscribe,${key}\n`, (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+  }
+
+  unsubscribe(key) {
+    return new Promise((resolve, reject) => {
+      this.socket.write(`unsubscribe,${key}\n`, (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+  }
+
+  onSubscriptionData(callback) {
+    this.socket.on('data', (data) => {
+      const messages = data.toString().trim().split('\n');
+      messages.forEach(message => {
+        const [key, timestamp, value] = message.split(',');
+        callback({
+          key,
+          timestamp: new Date(parseInt(timestamp) * 1000),
+          value: parseFloat(value)
+        });
+      });
+    });
+  }
 }
 
 // Example usage
@@ -121,6 +153,22 @@ async function example() {
 
   try {
     await client.connect();
+
+    // Subscribe to updates for sensor1
+    await client.subscribe('sensor1');
+    console.log('Subscribed to sensor1');
+
+    // Set up a callback for subscription data
+    client.onSubscriptionData((data) => {
+      console.log(`Received update for ${data.key}: ${data.value} at ${data.timestamp}`);
+    });
+
+    // Wait for some time to receive updates
+    await new Promise(resolve => setTimeout(resolve, 30000)); // Wait for 30 seconds
+
+    // Unsubscribe from updates for sensor1
+    await client.unsubscribe('sensor1');
+    console.log('Unsubscribed from sensor1');
 
     // Record a measurement
     await client.recordMeasurement('sensor1', 25.5);

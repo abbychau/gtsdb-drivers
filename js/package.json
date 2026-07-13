@@ -1,0 +1,16 @@
+{
+  "name": "drivers",
+  "version": "1.0.0",
+  "description": "Client libraries for [GTSDB](https://github.com/abbychau/gtsdb) with JSON and binary protocol support.",
+  "main": "gtsdb.js",
+  "scripts": {
+    "test": "mocha gtsdb.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "mocha": "^11.7.6"
+  }
+}

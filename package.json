@@ -2,16 +2,13 @@
   "name": "gtsdb-drivers",
   "version": "0.1.0",
   "description": "GTSDB Node.js client with JSON and binary protocol support",
-  "main": "gtsdb.js",
+  "main": "js/gtsdb.js",
   "repository": "github:abbychau/gtsdb-drivers",
   "keywords": ["gtsdb", "timeseries", "iot", "tsdb", "binary"],
   "author": "Abby <i@abby.md>",
   "license": "MIT",
   "type": "commonjs",
   "scripts": {
-    "test": "mocha gtsdb.test.js"
-  },
-  "devDependencies": {
-    "mocha": "^11.7.6"
+    "test": "cd js && mocha gtsdb.test.js"
   }
 }

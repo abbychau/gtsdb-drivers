@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/abbychau/gtsdb-drivers/go"
+	gtsdb "github.com/abbychau/gtsdb-drivers/go"
 )
 
 func main() {
